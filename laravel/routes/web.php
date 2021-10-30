@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+// APIのルート定義
+Route::middleware(['api'])->prefix('api')->group(function () {
+    // ログイン用ルート
+    Route::post('/login', [LoginController::class,'authenticate']);
+    //認証済の場合にアクセス可能なルートの定義
+    Route::middleware(['auth'])->group(function () {
+        //ダッシュボード
+        Route::get('/', [DashboardController::class,'index']);
+    });
 });
