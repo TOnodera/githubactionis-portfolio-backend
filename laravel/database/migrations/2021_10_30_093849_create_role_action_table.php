@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoleActionsTable extends Migration
+class CreateRoleActionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRoleActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('role_actions', function (Blueprint $table) {
+        Schema::create('role_action', function (Blueprint $table) {
             $table->id();
             $table->unique(['role_id','action_id']);
             $table->foreignId('role_id')->constrained();
@@ -29,6 +29,6 @@ class CreateRoleActionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_actions');
+        Schema::dropIfExists('role_action');
     }
 }
