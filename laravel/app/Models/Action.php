@@ -11,9 +11,9 @@ class Action extends Model
     protected $guarded = [];
 
     const RESOUCES = [
-        'user'=>'ユーザー',
-        'blog'=>'ブログ',
-        'role'=>'ロール'
+        'users'=>'ユーザー',
+        'blogs'=>'ブログ',
+        'roles'=>'ロール'
     ];
     
     const COMMANDS = [

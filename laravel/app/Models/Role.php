@@ -12,10 +12,6 @@ class Role extends Model
     protected $guarded = [];
     const ROLES = ['admin','normal'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function actions()
     {

@@ -13,7 +13,7 @@ class ActionSeeder extends Seeder
             foreach (Action::RESOUCES as $resouce=>$resouceName) {
                 Action::create([
                     'name'=>"{$resouceName}{$commandName}",
-                    'action'=>"$command:$resouce"
+                    'action'=>"{$command}-{$resouce}"
                 ]);
             }
         }
