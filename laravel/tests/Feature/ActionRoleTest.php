@@ -12,10 +12,12 @@ class ActionRoleTest extends TestCase
     {
         //アクション登録
         $action1 = Action::create([
-            'name'=>'ユーザー情報の閲覧'
+            'name'=>'ユーザー情報の閲覧',
+            'action' => 'read:user'
         ]);
         $action2 = Action::create([
-            'name'=>'ユーザー情報の編集'
+            'name'=>'ユーザー情報の編集',
+            'action' => 'edit:user'
         ]);
 
         //ロール登録

@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,5 +30,11 @@ Route::middleware(['api'])->prefix('api')->group(function () {
     Route::middleware(['auth'])->group(function () {
         //ダッシュボード
         Route::get('/', [DashboardController::class,'index']);
+        //ブログ
+        Route::get('/blogs', [BlogController::class,'index']);
+        //ユーザー
+        Route::get('/users', [UserController::class,'index']);
+        //ロール
+        Route::get('/roles', [RoleController::class,'index']);
     });
 });

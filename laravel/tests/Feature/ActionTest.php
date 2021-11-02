@@ -15,8 +15,8 @@ class ActionTest extends TestCase
     public function testアクションの登録ができる()
     {
         $action = 'ユーザー情報の閲覧';
-        Action::create(['name'=> $action]);
+        Action::create(['name'=> $action,'action'=>'read:user']);
 
-        $this->assertDatabaseHas('actions', ['name'=>$action]);
+        $this->assertDatabaseHas('actions', ['name'=>$action,'action' => 'read:user']);
     }
 }
