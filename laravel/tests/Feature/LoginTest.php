@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +15,11 @@ class LoginTest extends TestCase
     
     public function test登録済みユーザはログイン出来る()
     {
+        $role = Role::create(['name'=>'test']);
         $password = 'abcd1234';
         // $this->withoutExceptionHandling();
         $user = User::factory()->create([
+            'role_id' => $role->id,
             'email' => 'test@test.com',
             'password' => Hash::make($password)
         ]);

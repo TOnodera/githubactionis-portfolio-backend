@@ -9,10 +9,9 @@ class Role extends Model
 {
     use HasFactory;
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $guarded = [];
+    const ROLES = ['admin','normal'];
+
 
     public function actions()
     {
