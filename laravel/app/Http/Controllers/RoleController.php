@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helper\GuardHelper;
 use App\Models\Role;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -24,13 +25,14 @@ class RoleController extends Controller
         }
 
         $request->validate([
-            'name' => ['required','max:100']
+            'name' => ['required','max:100'],
         ]);
 
         if (count($request->actions)<=0) {
-            throw new ValidationException('アクションを選択して下さい。');
+            throw ValidationException::withMessages(['actions'=>'アクションを選択して下さい。']);
         }
-
+        
+        
         $role = Role::create(['name'=>$request->name]);
         $role->actions()->sync($request->actions);
         
