@@ -1,12 +1,13 @@
 version: "3"
 services:
-
   php:
     build: ./docker/php
     volumes:
       - ./:/home/www-data/app
     environment:
       - TZ=${TZ}
+    ports:
+      - 8888:8000
   db:
     build: ./docker/mysql
     volumes:
