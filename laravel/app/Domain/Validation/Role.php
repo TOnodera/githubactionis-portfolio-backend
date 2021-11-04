@@ -10,13 +10,14 @@ class Role
 {
     public function indexValidation(Request $request)
     {
-        if (GuardHelper::disableAction('read-roles')) {
+        if (GuardHelper::disableAction('read-roles', $request)) {
             return abort(403);
         }
     }
+    
     public function createValidation(Request $request)
     {
-        if (GuardHelper::disableAction('create-roles')) {
+        if (GuardHelper::disableAction('create-roles', $request)) {
             return abort(403);
         }
 

@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -35,6 +36,28 @@ class RoleTest extends TestCase
         $normalUser = User::find(3);
         Auth::login($normalUser);
         $this->get('/api/roles')->assertForbidden();
+        Auth::logout();
+    }
+
+
+    public function test一覧データを取得できる()
+    {
+        //シード
+        $this->seed();
+        //管理者権限を持つユーザーを取得
+        $adminUser = User::join('roles', function ($join) {
+            $join->on('users.role_id', '=', 'roles.id');
+        })->where('roles.name', '=', 'admin')->first();
+
+        Auth::login($adminUser);
+        $this->getJson('/api/roles')->assertJson(
+            fn (AssertableJson $json) =>
+            $json->has(2)
+                ->first(
+                    fn ($json) =>
+                    $json->where('name', 'admin')->etc()
+                )
+        );
         Auth::logout();
     }
     
