@@ -25,32 +25,32 @@ class LoginTest extends TestCase
         $this->post('api/login', [
             'email' => $user->email,
             'password' => $password
-        ])->assertRedirect('dashboard');
+        ])->assertOk();
     }
 
     public function test未登録のユーザーはログインに失敗、loginページにリダイレクトされる()
     {
-        $this->from('api/login')->post('api/login', [
+        $this->post('api/login', [
             'email' => 'didnt-register@test.com',
             'password' => 'didnt-registered'
-        ])->assertRedirect('api/login')->assertSessionHasErrors([
-            'email' => '入力された認証情報ではログインできません。',
-        ]);
+        ])->assertStatus(401);
     }
 
     public function testルートisLoginでログインチェックできる()
     {
+        // $this->withoutExceptionHandling();
         $role = Role::create(['name'=>'test']);
         $password = 'abcd1234';
-        $this->withoutExceptionHandling();
         $user = User::factory()->create([
             'role_id' => $role->id,
             'email' => 'test@test.com',
             'password' => Hash::make($password)
         ]);
+        Auth::login($user);
         $this->postJson('api/login', [
             'email'=>'test@test.com',
             'password'=>$password
-        ])->assertRedirect('dashboard');
+        ])->assertOk();
+        Auth::logout();
     }
 }

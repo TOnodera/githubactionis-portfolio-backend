@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,11 +24,9 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            return response()->json(['login'=>true]);
         }
 
-        return back()->withErrors([
-            'email' => '入力された認証情報ではログインできません。',
-        ]);
+        throw new AuthenticationException('ログインして下さい。');
     }
 }
