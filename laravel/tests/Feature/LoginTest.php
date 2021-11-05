@@ -17,7 +17,6 @@ class LoginTest extends TestCase
     {
         $role = Role::create(['name'=>'test']);
         $password = 'abcd1234';
-        // $this->withoutExceptionHandling();
         $user = User::factory()->create([
             'role_id' => $role->id,
             'email' => 'test@test.com',
@@ -37,5 +36,21 @@ class LoginTest extends TestCase
         ])->assertRedirect('api/login')->assertSessionHasErrors([
             'email' => '入力された認証情報ではログインできません。',
         ]);
+    }
+
+    public function testルートisLoginでログインチェックできる()
+    {
+        $role = Role::create(['name'=>'test']);
+        $password = 'abcd1234';
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create([
+            'role_id' => $role->id,
+            'email' => 'test@test.com',
+            'password' => Hash::make($password)
+        ]);
+        $this->postJson('api/login', [
+            'email'=>'test@test.com',
+            'password'=>$password
+        ])->assertRedirect('dashboard');
     }
 }

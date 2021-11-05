@@ -27,13 +27,17 @@ class RoleTest extends TestCase
         //シード
         $this->seed();
         //管理者権限を持つユーザーを取得
-        $adminUser = User::find(2);
+        $adminUser = User::join('roles', function ($join) {
+            $join->on('users.role_id', '=', 'roles.id');
+        })->where('roles.name', '=', 'admin')->first();
         Auth::login($adminUser);
         $this->get('/api/roles')->assertOk();
         Auth::logout();
 
         //一般ユーザーはリダイレクトされる
-        $normalUser = User::find(3);
+        $normalUser = User::join('roles', function ($join) {
+            $join->on('users.role_id', '=', 'roles.id');
+        })->where('roles.name', '=', 'normal')->first();
         Auth::login($normalUser);
         $this->get('/api/roles')->assertForbidden();
         Auth::logout();
