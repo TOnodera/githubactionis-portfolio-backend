@@ -39,7 +39,11 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (AuthenticationException $e) {
-            return response()->json(['message'=>$e->getMessage()], 401);
+            return response()->json(['message'=>$e->getMessage()], $e->status);
+        });
+        
+        $this->renderable(function (AuthenticationAttemptException $e) {
+            return response()->json(['message'=>$e->getMessage()], $e->status);
         });
     }
 }

@@ -18,14 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
 
 // APIのルート定義
 Route::middleware(['api'])->prefix('api')->group(function () {
     // ログイン用ルート
-    Route::post('/login', [LoginController::class,'authenticate'])->name('login');
+    Route::post('/login', [LoginController::class,'authenticate']);
     //認証済の場合にアクセス可能なルートの定義
     Route::middleware(['auth'])->group(function () {
         //ダッシュボード

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\AuthenticationException;
+use App\Exceptions\AuthenticationAttemptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,13 +20,12 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-        
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return response()->json(['login'=>true]);
+            return response()->json(['login'=>1]);
         }
 
-        throw new AuthenticationException('ログインして下さい。');
+        throw new AuthenticationAttemptException('入力された情報ではログインできません。');
     }
 }

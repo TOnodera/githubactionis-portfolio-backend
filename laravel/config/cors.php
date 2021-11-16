@@ -17,7 +17,7 @@ return [
 
     'paths' => ['*'],
 
-    'allowed_methods' => ['http://localhost:8080'],
+    'allowed_methods' => ['*'],
 
     'allowed_origins' => ['*'],
 
